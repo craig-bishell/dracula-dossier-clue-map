@@ -92,6 +92,7 @@ module.exports.homelist = function(req, res){
     json : {},
     qs : {}
   };
+  console.log(requestOptions.url);
   request(
     requestOptions,
     function(err, response, body) {
@@ -140,7 +141,7 @@ module.exports.doAddClue = function(req, res){
       requestOptions,
       function(err, response, body) {
         if (response.statusCode === 201) {
-          res.redirect('/' + locationid);
+          res.redirect('/');
           
         } else if (response.statusCode === 400 && body.name && body.name === "ValidationError" ) {
           res.redirect('/clue/new?err=val');
