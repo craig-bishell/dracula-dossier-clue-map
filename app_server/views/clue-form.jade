@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  .row.page-header
+    .col-lg-12
+      h1= pageHeader.title
+  .row
+    .col-xs-12.col-md-6
+      form.form-horizontal(action="", method="post", role="form")
+        - if (error == "val")
+          .alert.alert-danger(role="alert") Mandatory field not entered, please try again
+        .form-group
+          label.col-xs-2.col-sm-2.control-label(for="lat") Lat.
+          .col-sm-10
+            input#clue.form-control(name="lat")
+        .form-group
+          label.col-xs-2.col-sm-2.control-label(for="lng") Lng.
+          .col-sm-10
+            input#clue.form-control(name="lng")
+        .form-group
+          label.col-sm-2.control-label(for="clue") Clue
+          .col-sm-10
+            textarea#clue.form-control(name="clue", rows="5")
+        .form-group
+          label.col-xs-2.col-sm-2.control-label(for="imageURL") Image URL
+          .col-sm-10
+            input#clue.form-control(name="imageURL")
+        .btn-group.pull-right
+          button.btn.btn-default Add my clue
+          a.btn.btn-default(href='/') Cancel
+    .col-xs-12.col-md-4

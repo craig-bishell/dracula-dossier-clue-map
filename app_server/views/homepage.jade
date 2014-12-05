@@ -1,0 +1,46 @@
+extends layout
+
+block styles
+  style(type='text/css').
+    html { height: 100% }
+    body { height: 100%; margin: 0; padding: 0 }
+    #map-canvas { height: 100% }
+
+block scripts
+  script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyASxKYeIKq1QMQicIWbdFx-O337hWQ5sPk')
+  script(type='text/javascript').
+    var mapMarkers = new Array();
+    function initialize() {
+      var mapOptions = {
+        center: { lat: #{mapCentre.lat}, lng: #{mapCentre.lng} },
+        zoom: #{mapZoom}
+      };
+      var map = new google.maps.Map(document.getElementById('mapCanvas'), mapOptions);
+      for (var i = 0; i < mapMarkers.length; i++) {
+        mapMarkers[i].setMap(map);
+      }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+  each clue in clues
+    script(type='text/javascript').
+      mapMarkers.push(
+        new google.maps.Marker({
+          position: { lat: #{clue.lat}, lng: #{clue.lng} },
+          title: "#{clue.text}"
+        })
+      );
+
+block content
+  #banner.page-header
+    .row
+      .col-lg-6
+        h1= pageHeader.title
+        small &nbsp;#{pageHeader.strapline}
+    .row
+      .col-xs-12.col-sm-12
+        #mapCanvas(style='min-height: 500px')
+        a.btn.btn-default.pull-right(href='/clue/new') Add Clue
+        
+block endScripts
+  script(src='/javascript/validation.js')
